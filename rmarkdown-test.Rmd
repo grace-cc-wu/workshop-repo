@@ -1,0 +1,41 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Header one
+
+Explanation goes **here**
+
+* item 1
+* item 2
+
+# Here you can write a LaTeX equation:
+
+$\sum{x^2}$
+
+```{r name_1}
+# comment
+x <- c(1, 12, -5)
+x
+```
+
+# Here is a hidden chunk of code using echo = FALSE
+```{r name_2, echo=FALSE}
+# comment
+x <- c(1, 12, -5)
+x
+```
+
+## read data
+```{r}
+bg_chem <- read.csv(file = "data/BGchem2008data.csv")
+## if you have the rmarkdown code elsewhere, use the ../ to navigate up:
+# bg_chem <- read.csv(file = "../data/BGchem2008data.csv")
+```
+
+

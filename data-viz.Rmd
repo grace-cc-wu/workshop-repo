@@ -48,3 +48,17 @@ head(annual_esc)
   
 ```
 
+# Data viz
+
+## First look at the data
+```{r}
+ggplot(annual_esc, aes(x = Species, y = escapement)) +
+  geom_col()
+```
+
+Changing color of bars
+```{r}
+ggplot(annual_esc, aes(x = Species, y = escapement, fill = SASAP.Region)) +
+  geom_col()
+```
+

@@ -57,8 +57,95 @@ ggplot(annual_esc, aes(x = Species, y = escapement)) +
 ```
 
 Changing color of bars
+
+Everything that goes into aes is the variable mapping
+```{r}
+ggplot(annual_esc, aes(x = Species, y = escapement)) +
+  geom_col(fill = "blue")
+```
+
+Per region:
 ```{r}
 ggplot(annual_esc, aes(x = Species, y = escapement, fill = SASAP.Region)) +
   geom_col()
+```
+
+### Looking at the Kodiak region
+
+```{r}
+## need to use color instead of fill for a geom_line() if you want to add a third dimension to a geom_line()
+annual_esc %>%
+  filter(SASAP.Region == "Kodiak") %>%
+  ggplot(aes(x = Year, y = escapement/10^6, color = Species)) + 
+  geom_line() +
+  geom_point() +
+  ggtitle("Salmon annual escapement") +
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5), legend.position=c(0.3, 0.75), legend.title = element_blank())
+  #facet_wrap(~Species)
+```
+
+### Looking at the Kodiak region
+
+```{r}
+## need to use color instead of fill for a geom_line() if you want to add a third dimension to a geom_line()
+annual_esc %>%
+  ggplot(aes(x = Year, y = escapement/10^6, color = Species)) + 
+  geom_line() +
+  geom_point() +
+  ggtitle("Salmon annual escapement") +
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5), legend.position="bottom", legend.title = element_blank())+
+  facet_wrap(~SASAP.Region, scales = "free_y")
+```
+
+## Use patchwork library to arrange multiple subplots
+```{r}
+p1 <- ggplot(annual_esc, aes(x = Species, y = escapement)) +
+  geom_col()
+p2 <- ggplot(annual_esc, aes(x = Species, y = escapement)) +
+  geom_col(fill = "blue")
+
+p1 + p2 + plot_layout(nrow = 2)
+
+```
+
+```{r}
+percent <- function(percent_in, total){
+  out <- percent_in*total/100
+  #paste(as.character(out),, sep="")
+  out
+}
+
+percent(10, 100)
+```
+
+Make a ratio factor an argument so that we can also use it to compute 1/1000; make it compute percentage by default
+```{r}
+#' Compute a ratio
+#'
+#' @param percent_in number used in the numerator of the ratio
+#' @param total number value used to apply ratio
+#' @param place optional - number used in the denominator of the ratio
+#'
+#' @return 
+#' @export
+#'
+#' @examples ratio(10,55)
+
+ratio <- function(percent_in, total, place=100){
+  out <- percent_in*total/place
+  out
+}
+
+ratio(10, 100, 1000)
+```
+
+To source your function from another Rscript file:
+
+Save your function as an R script
+Use source() function. This runs the script and loads everything in your global environment
+```{r}
+source("myTestFunction.R")
 ```
 

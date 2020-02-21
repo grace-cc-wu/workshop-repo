@@ -39,7 +39,10 @@ vignettes/*.pdf
 .Renviron
 
 # Rproj files
-.Rproj
+*.Rproj
 
 # html files
-.html
+*.html
+
+# shapefile data directory
+data/
